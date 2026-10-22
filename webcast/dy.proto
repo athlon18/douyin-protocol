@@ -1,0 +1,668 @@
+syntax = "proto3";
+
+package douyin;
+
+option go_package = "github.com/athlon18/douyin-protocol/webcast;pb";
+
+// 官方定义：webcast.im.Response（共 13 格；本文件声明的字段号已逐格核对）
+message Response {
+  repeated Message messagesList = 1; // 官方该格是 messages：message（我们叫 messagesList）
+  string cursor = 2; // 官方 cursor：string
+  uint64 fetchInterval = 3; // 官方 fetch_interval：int64
+  uint64 now = 4; // 官方 now：int64
+  string internalExt = 5; // 官方 internal_ext：string
+  uint32 fetchType = 6; // 官方 fetch_type：int32
+  map<string, string> routeParams = 7;
+  uint64 heartbeatDuration = 8; // 官方 heartbeat_duration：int64
+  bool needAck = 9; // 官方 need_ack：bool
+  string pushServer = 10; // 官方 push_server：string
+  string liveCursor = 11; // 官方 live_cursor：string
+  bool historyNoMore = 12; // 官方 history_no_more：bool
+}
+
+// 官方定义：webcast.im.Message（共 9 格；本文件声明的字段号已逐格核对）
+message Message{
+    string method = 1; // 官方 method：string
+    bytes payload = 2; // 官方 payload：bytes
+    int64 msgId = 3; // 官方 msg_id：int64
+    int32 msgType = 4; // 官方 msg_type：int32
+    int64 offset = 5; // 官方 offset：int64
+    bool needWrdsStore = 6; // 官方 need_wrds_store：bool
+    int64 wrdsVersion = 7; // 官方 wrds_version：int64
+    string wrdsSubKey = 8; // 官方 wrds_sub_key：string
+}
+
+// 聊天
+// 官方定义：webcast.im.ChatMessage（共 21 格；本文件声明的字段号已逐格核对）
+message ChatMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  User user = 2; // 官方 user：User；本条消息的主体用户
+  string content = 3; // 官方 content：string；弹幕正文（实测正常解出，界面在用）
+  bool visibleToSender = 4; // 官方 visible_to_sender：bool
+  Image backgroundImage = 5; // 官方 background_image：Image
+  string fullScreenTextColor = 6; // 官方 full_screen_text_color：string
+  Image backgroundImageV2 = 7; // 官方 background_image_v2：Image
+  PublicAreaCommon publicAreaCommon = 8; // 官方 public_area_common：PublicAreaCommon
+  Image giftImage = 9; // 官方该格是 public_area_common：PublicAreaCommon（我们叫 giftImage）
+  uint64 agreeMsgId = 11; // 官方 agree_msg_id：int64
+  uint32 priorityLevel = 12; // 官方 priority_level：int32
+  LandscapeAreaCommon landscapeAreaCommon = 13; // 官方 landscape_area_common：LandscapeAreaCommon
+  uint64 eventTime = 15; // 官方 event_time：int64
+  bool sendReview = 16; // 官方 send_review：bool
+  bool fromIntercom = 17; // 官方 from_intercom：bool
+  bool intercomHideUserCard = 18; // 官方 intercom_hide_user_card：bool
+//  repeated chatTagsList = 19;
+  string chatBy = 20; // 官方 chat_by：int64
+  uint32 individualChatPriority = 21; // 官方 individual_chat_priority：int32
+  Text rtfContent = 22; // 官方 rtf_content：Text
+}
+
+
+// 官方定义：webcast.im.LandscapeAreaCommon（共 5 格；本文件声明的字段号已逐格核对）
+message LandscapeAreaCommon {
+  bool showHead = 1; // 官方 show_head：bool
+  bool showNickname = 2; // 官方 show_nickname：bool
+  bool showFontColor = 3; // 官方 show_font_color：bool
+  repeated string colorValueList = 4; // 官方该格是 color_value：string（我们叫 colorValueList）
+  repeated CommentTypeTag commentTypeTagsList = 5; // 官方该格是 comment_type_tags：int32（我们叫 commentTypeTagsList），⚠ 官方为单值
+}
+
+// 官方定义：webcast.im.RoomUserSeqMessage（共 13 格；本文件声明的字段号已逐格核对）
+message RoomUserSeqMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  repeated RoomUserSeqMessageContributor ranksList = 2; // 官方该格是 ranks：RoomUserSeqMessage.Contributor（我们叫 ranksList）；房内贡献榜（实测只给前 3 名）
+  int64 total = 3; // 官方 total：int64；当前在线人数（抖音口径，界面"在线人数"唯一出处）
+  string popStr = 4; // 官方 pop_str：string；抖音自用文案，我们未使用（实测常为空）
+  repeated RoomUserSeqMessageContributor seatsList = 5; // 官方该格是 seats：RoomUserSeqMessage.Contributor（我们叫 seatsList）；团播麦位表（下标即麦位序号）
+  int64 popularity = 6; // 官方 popularity：int64
+  int64 totalUser = 7; // 官方 total_user：int64；累计到访人数（进房人数口径）
+  string totalUserStr = 8; // 官方 total_user_str：string
+  string totalStr = 9; // 官方 total_str：string
+  string onlineUserForAnchor = 10; // 官方 online_user_for_anchor：string
+  string totalPvForAnchor = 11; // 官方 total_pv_for_anchor：string
+  string upRightStatsStr = 12; // 官方 up_right_stats_str：string
+  string upRightStatsStrComplete = 13; // 官方 up_right_stats_str_complete：string
+
+}
+
+// 官方定义：webcast.im.CommonTextMessage（共 4 格；本文件声明的字段号已逐格核对）
+message CommonTextMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  User user = 2; // 官方 user：User；本条消息的主体用户
+  string scene = 3; // 官方 scene：string
+}
+
+// 官方定义：webcast.im.UpdateFanTicketMessage（共 4 格；本文件声明的字段号已逐格核对）
+message UpdateFanTicketMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  string roomFanTicketCountText = 2; // 官方 room_fan_ticket_count_text：string
+  uint64 roomFanTicketCount = 3; // 官方 room_fan_ticket_count：int64；本场粉丝团票数（真正的粉丝票字段）
+  bool forceUpdate = 4; // 官方 force_update：bool
+}
+
+// 官方定义：webcast.im.RoomUserSeqMessage.Contributor（共 7 格；本文件声明的字段号已逐格核对）
+message RoomUserSeqMessageContributor {
+  uint64 score = 1; // 官方 score：int64；该用户贡献分值
+  User user = 2; // 官方 user：User；本条消息的主体用户
+  uint64 rank = 3; // 官方 rank：int64；该用户榜内名次
+  uint64 delta = 4; // 官方 delta：int64；本条消息带来的分值增量
+  bool isHidden = 5; // 官方 is_hidden：bool；该条是否在抖音端隐藏
+  string scoreDescription = 6; // 官方 score_description：string
+  string exactlyScore = 7; // 官方 exactly_score：string
+}
+
+// 礼物消息
+//
+// 字段号/名称/类型已逐格对过抖音网页端自己下发的 protobuf 定义（见
+// docs/dy-webcast-proto-check.md）。第 3 格以前被写成 `uint64 fanTicketCount`，
+// 而官方那一格是 `repeated string to_openids` —— 类型不匹配，它永远只会解出 0；
+// 全仓无人调用，故直接改成官方口径。真正的粉丝票数是下面第 13 格。
+// 官方定义：webcast.im.GiftMessage（共 42 格；本文件声明的字段号已逐格核对）
+message GiftMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  uint64 giftId = 2; // 官方 gift_id：int64
+  repeated string toOpenids = 3; // 官方 to_openids：string；官方 to_openids（以前误声明为 fanTicketCount）
+  uint64 groupCount = 4; // 官方 group_count：int64；本组展示条数（连击每帧递增，用于去重后计数）
+  uint64 repeatCount = 5; // 官方 repeat_count：int64；重复次数
+  uint64 comboCount = 6; // 官方 combo_count：int64；连击数（group_count 为 0 时的兜底）
+  User user = 7; // 官方 user：User；本条消息的主体用户
+  User toUser = 8; // 官方 to_user：User
+  uint32 repeatEnd = 9; // 官方 repeat_end：int32；连击结束标记
+  TextEffect textEffect = 10; // 官方 text_effect：GiftMessage.TextEffect；弹幕文字特效
+  uint64 groupId = 11; // 官方 group_id：int64；连击组 ID：同一次连击不变，按它增量去重
+  uint64 incomeTaskgifts = 12; // 官方 income_taskgifts：int64
+  uint64 roomFanTicketCount = 13; // 官方 room_fan_ticket_count：int64；本场粉丝团票数（真正的粉丝票字段）
+  GiftIMPriority priority = 14; // 官方 priority：GiftIMPriority
+  GiftStruct gift = 15; // 官方 gift：GiftStruct；礼物结构体（名称/单价/图标/特效 ID）
+  string logId = 16; // 官方 log_id：string；抖音侧日志 ID（排查单笔礼物用）
+  uint64 sendType = 17; // 官方 send_type：int64；送出方式（1 普通 2 包场 3 任务礼物 4 特殊 5 全服 6 手气卡）
+  PublicAreaCommon publicAreaCommon = 18; // 官方 public_area_common：PublicAreaCommon
+  Text trayDisplayText = 19; // 官方 tray_display_text：Text
+  uint64 bannedDisplayEffects = 20; // 官方 banned_display_effects：int64
+//  GiftTrayInfo trayInfo = 21;
+//  AssetEffectMixInfo assetEffectMixInfo = 22;
+  bool displayForSelf = 25; // 官方 display_for_self：bool
+  string interactGiftInfo = 26; // 官方 interact_gift_info：string
+  string diyItemInfo = 27; // 官方 diy_item_info：string
+  repeated uint64 minAssetSetList = 28; // 官方该格是 min_asset_set：int64（我们叫 minAssetSetList），⚠ 官方为单值
+  uint64 totalCount = 29; // 官方 total_count：int64
+  uint32 clientGiftSource = 30; // 官方 client_gift_source：int32
+//  AnchorGiftData anchorGift = 31;
+  repeated uint64 toUserIdsList = 32; // 官方该格是 to_user_ids：int64（我们叫 toUserIdsList），⚠ 官方为单值
+  uint64 sendTime = 33; // 官方 send_time：int64
+  uint64 forceDisplayEffects = 34; // 官方 force_display_effects：int64
+  string traceId = 35; // 官方 trace_id：string
+  uint64 effectDisplayTs = 36; // 官方 effect_display_ts：int64
+}
+
+// 官方定义：webcast.data.GiftStruct（共 81 格；本文件声明的字段号已逐格核对）
+message GiftStruct {
+  Image image = 1; // 官方 image：Image；礼物图标
+  string describe = 2; // 官方 describe：string
+  bool notify = 3; // 官方 notify：bool
+  uint64 duration = 4; // 官方 duration：int64
+  uint64 id = 5; // 官方 id：int64；用户数字 ID（名册主键）
+//  GiftStructFansClubInfo fansclubInfo = 6;
+  bool forLinkmic = 7; // 官方 for_linkmic：bool
+  bool doodle = 8; // 官方 doodle：bool
+  bool forFansclub = 9; // 官方 for_fansclub：bool
+  bool combo = 10; // 官方 combo：bool
+  uint32 type = 11; // 官方 type：int32
+  uint32 diamondCount = 12; // 官方 diamond_count：int32；礼物单价（抖币；与音浪 1:1）
+  bool isDisplayedOnPanel = 13; // 官方 is_displayed_on_panel：bool
+  uint64 primaryEffectId = 14; // 官方 primary_effect_id：int64；主特效 ID（全屏特效关联用）
+  Image giftLabelIcon = 15; // 官方 gift_label_icon：Image
+  string name = 16; // 官方 name：string；名称
+  string region = 17; // 官方 region：string
+  string manual = 18; // 官方 manual：string
+  bool forCustom = 19; // 官方 for_custom：bool
+  //  specialEffectsMap = 20;
+  Image icon = 21; // 官方 icon：Image；事件图标
+  uint32 actionType = 22; // 官方 action_type：int32
+  // fixme 后面的就不写了还有几十个属性
+
+}
+
+// 官方定义：webcast.data.GiftIMPriority（共 3 格；本文件声明的字段号已逐格核对）
+message GiftIMPriority {
+    repeated uint64 queueSizesList = 1; // 官方该格是 queue_sizes：int64（我们叫 queueSizesList），⚠ 官方为单值
+    uint64 selfQueuePriority = 2; // 官方 self_queue_priority：int64
+    uint64 priority = 3; // 官方 priority：int64
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message TextEffect {
+  TextEffectDetail portrait = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  TextEffectDetail landscape = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message TextEffectDetail {
+  Text text = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  uint32 textFontSize = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  Image background = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+  uint32 start = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+  uint32 duration = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  uint32 x = 6; // ⚠ 官方该消息没有第 6 格（自留/待核字段）
+  uint32 y = 7; // ⚠ 官方该消息没有第 7 格（自留/待核字段）
+  uint32 width = 8; // ⚠ 官方该消息没有第 8 格（自留/待核字段）
+  uint32 height = 9; // ⚠ 官方该消息没有第 9 格（自留/待核字段）
+  uint32 shadowDx = 10; // ⚠ 官方该消息没有第 10 格（自留/待核字段）
+  uint32 shadowDy = 11; // ⚠ 官方该消息没有第 11 格（自留/待核字段）
+  uint32 shadowRadius = 12; // ⚠ 官方该消息没有第 12 格（自留/待核字段）
+  string shadowColor = 13; // ⚠ 官方该消息没有第 13 格（自留/待核字段）
+  string strokeColor = 14; // ⚠ 官方该消息没有第 14 格（自留/待核字段）
+  uint32 strokeWidth = 15; // ⚠ 官方该消息没有第 15 格（自留/待核字段）
+}
+
+// 成员消息
+// 官方定义：webcast.im.MemberMessage（共 24 格；本文件声明的字段号已逐格核对）
+message MemberMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  User user = 2; // 官方 user：User；本条消息的主体用户
+  // 官方这一格是 user_open_id（字符串）；以前写成 uint64 memberCount 且永远解出 0。
+  // 官方 MemberMessage 24 格里根本没有 member_count，“进场人数”只能取
+  // RoomUserSeqMessage.total_user，不要从这里拿。
+  string userOpenId = 3; // 官方 user_open_id：string
+  User operator = 4; // 官方 operator：User
+  bool isSetToAdmin = 5; // 官方 is_set_to_admin：bool
+  bool isTopUser = 6; // 官方 is_top_user：bool
+  uint64 rankScore = 7; // 官方 rank_score：int64
+  uint64 topUserNo = 8; // 官方 top_user_no：int64
+  uint64 enterType = 9; // 官方 enter_type：int64；进场方式
+  uint64 action = 10; // 官方 action：int64；动作码（进场/关注/分享等事件的类型）
+  string actionDescription = 11; // 官方 action_description：string
+  uint64 userId = 12; // 官方 user_id：int64
+  EffectConfig effectConfig = 13; // 官方 effect_config：MemberMessage.EffectConfig
+  string popStr = 14; // 官方 pop_str：string；抖音自用文案，我们未使用（实测常为空）
+  EffectConfig enterEffectConfig = 15; // 官方 enter_effect_config：MemberMessage.EffectConfig
+  Image backgroundImage = 16; // 官方 background_image：Image
+  Image backgroundImageV2 = 17; // 官方 background_image_v2：Image
+  Text anchorDisplayText = 18; // 官方 anchor_display_text：Text
+  PublicAreaCommon publicAreaCommon = 19; // 官方 public_area_common：PublicAreaCommon
+  uint64 userEnterTipType = 20; // 官方 user_enter_tip_type：int64
+  uint64 anchorEnterTipType = 21; // 官方 anchor_enter_tip_type：int64
+}
+
+
+// 官方定义：webcast.im.PublicAreaCommon（共 26 格；本文件声明的字段号已逐格核对）
+message PublicAreaCommon {
+  Image userLabel = 1; // 官方 user_label：Image
+  uint64 userConsumeInRoom = 2; // 官方 user_consume_in_room：int64
+  uint64 userSendGiftCntInRoom = 3; // 官方 user_send_gift_cnt_in_room：int64
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message EffectConfig {
+  uint64 type = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  Image icon = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  uint64 avatarPos = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+  Text text = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+  Image textIcon = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  uint32 stayTime = 6; // ⚠ 官方该消息没有第 6 格（自留/待核字段）
+  uint64 animAssetId = 7; // ⚠ 官方该消息没有第 7 格（自留/待核字段）
+  Image badge = 8; // ⚠ 官方该消息没有第 8 格（自留/待核字段）
+  repeated uint64 flexSettingArrayList = 9; // ⚠ 官方该消息没有第 9 格（自留/待核字段）
+  Image textIconOverlay = 10; // ⚠ 官方该消息没有第 10 格（自留/待核字段）
+  Image animatedBadge = 11; // ⚠ 官方该消息没有第 11 格（自留/待核字段）
+  bool hasSweepLight = 12; // ⚠ 官方该消息没有第 12 格（自留/待核字段）
+  repeated uint64 textFlexSettingArrayList = 13; // ⚠ 官方该消息没有第 13 格（自留/待核字段）
+  uint64 centerAnimAssetId = 14; // ⚠ 官方该消息没有第 14 格（自留/待核字段）
+  Image dynamicImage = 15; // ⚠ 官方该消息没有第 15 格（自留/待核字段）
+  map<string,string> extraMap = 16;
+  uint64 mp4AnimAssetId = 17; // ⚠ 官方该消息没有第 17 格（自留/待核字段）
+  uint64 priority = 18; // ⚠ 官方该消息没有第 18 格（自留/待核字段）
+  uint64 maxWaitTime = 19; // ⚠ 官方该消息没有第 19 格（自留/待核字段）
+  string dressId = 20; // ⚠ 官方该消息没有第 20 格（自留/待核字段）
+  uint64 alignment = 21; // ⚠ 官方该消息没有第 21 格（自留/待核字段）
+  uint64 alignmentOffset = 22; // ⚠ 官方该消息没有第 22 格（自留/待核字段）
+}
+
+// 官方定义：webcast.data.Text（共 4 格；本文件声明的字段号已逐格核对）
+message Text {
+  string key = 1; // 官方 key：string
+  string defaultPatter = 2; // 官方该格是 default_pattern：string（我们叫 defaultPatter）
+  TextFormat defaultFormat = 3; // 官方 default_format：TextFormat
+  repeated TextPiece piecesList = 4; // 官方该格是 pieces：TextPiece（我们叫 piecesList）
+}
+
+// 官方定义：webcast.data.TextPiece（共 11 格；本文件声明的字段号已逐格核对）
+message TextPiece {
+  bool type = 1; // 官方 type：int32
+  TextFormat format = 2; // 官方 format：TextFormat
+  string stringValue = 3; // 官方该格是 value_ref：string（我们叫 stringValue）
+  TextPieceUser userValue = 4; // 官方 user_value：TextPieceUser
+  TextPieceGift giftValue = 5; // 官方 gift_value：TextPieceGift
+  TextPieceHeart heartValue = 6; // 官方 heart_value：TextPieceHeart
+  TextPiecePatternRef patternRefValue = 7; // 官方 pattern_ref_value：TextPiecePatternRef
+  TextPieceImage imageValue = 8; // 官方 image_value：TextPieceImage
+}
+
+
+// 官方定义：webcast.data.TextPieceImage（共 2 格；本文件声明的字段号已逐格核对）
+message TextPieceImage {
+  Image image = 1; // 官方 image：Image；礼物图标
+  float scalingRate = 2; // 官方 scaling_rate：float
+}
+
+// 官方定义：webcast.data.TextPiecePatternRef（共 2 格；本文件声明的字段号已逐格核对）
+message TextPiecePatternRef {
+  string key = 1; // 官方 key：string
+  string defaultPattern = 2; // 官方 default_pattern：string
+}
+
+// 官方定义：webcast.data.TextPieceHeart（共 1 格；本文件声明的字段号已逐格核对）
+message TextPieceHeart {
+  string color = 1; // 官方 color：string
+}
+
+// 官方定义：webcast.data.TextPieceGift（共 2 格；本文件声明的字段号已逐格核对）
+message TextPieceGift {
+  uint64 giftId = 1; // 官方 gift_id：int64
+  PatternRef nameRef = 2; // 官方 name_ref：PatternRef
+}
+
+// 官方定义：webcast.data.PatternRef（共 2 格；本文件声明的字段号已逐格核对）
+message PatternRef {
+  string key = 1; // 官方 key：string
+  string defaultPattern = 2; // 官方 default_pattern：string
+}
+
+// 官方定义：webcast.data.TextPieceUser（共 6 格；本文件声明的字段号已逐格核对）
+message TextPieceUser {
+  User user = 1; // 官方 user：User；本条消息的主体用户
+  bool withColon = 2; // 官方 with_colon：bool
+}
+
+// 官方定义：webcast.data.TextFormat（共 12 格；本文件声明的字段号已逐格核对）
+message TextFormat {
+  string color = 1; // 官方 color：string
+  bool bold = 2; // 官方 bold：bool
+  bool italic = 3; // 官方 italic：bool
+  uint32 weight = 4; // 官方 weight：int32
+  uint32 italicAngle = 5; // 官方 italic_angle：int32
+  uint32 fontSize = 6; // 官方 font_size：int32
+  bool useHeighLightColor = 7; // 官方 use_heigh_light_color：bool
+  bool useRemoteClor = 8; // 官方 use_remote_clor：bool
+}
+
+// 点赞
+// 官方定义：webcast.im.LikeMessage（共 12 格；本文件声明的字段号已逐格核对）
+message LikeMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  uint64 count = 2; // 官方 count：int64；本条消息的计数（点赞数等）
+  uint64 total = 3; // 官方 total：int64；当前在线人数（抖音口径，界面"在线人数"唯一出处）
+  uint64 color = 4; // 官方 color：int64
+  User user = 5; // 官方 user：User；本条消息的主体用户
+  string icon = 6; // 官方 icon：string；事件图标
+  DoubleLikeDetail doubleLikeDetail = 7; // 官方 double_like_detail：DoubleLikeDetail
+  DisplayControlInfo displayControlInfo = 8; // 官方 display_control_info：DisplayControlInfo
+  uint64 linkmicGuestUid = 9; // 官方 linkmic_guest_uid：int64
+  string scene = 10; // 官方 scene：string
+  PicoDisplayInfo picoDisplayInfo = 11; // 官方 pico_display_info：PicoDisplayInfo
+
+}
+
+// 官方定义：webcast.im.SocialMessage（共 8 格；本文件声明的字段号已逐格核对）
+message SocialMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  User user = 2; // 官方 user：User；本条消息的主体用户
+  uint64 shareType = 3; // 官方 share_type：int64；分享类型
+  uint64 action = 4; // 官方 action：int64；动作码（进场/关注/分享等事件的类型）
+  string shareTarget = 5; // 官方 share_target：string
+  uint64 followCount = 6; // 官方 follow_count：int64；关注/分享后的累计关注数
+  PublicAreaCommon publicAreaCommon = 7; // 官方 public_area_common：PublicAreaCommon
+}
+
+// 官方定义：webcast.im.PicoDisplayInfo（共 4 格；本文件声明的字段号已逐格核对）
+message PicoDisplayInfo {
+  uint64 comboSumCount = 1; // 官方 combo_sum_count：int64
+  string emoji = 2; // 官方 emoji：string
+  Image emojiIcon = 3; // 官方 emoji_icon：Image
+  string emojiText = 4; // 官方 emoji_text：string
+}
+
+// 官方定义：webcast.im.DoubleLikeDetail（共 4 格；本文件声明的字段号已逐格核对）
+message DoubleLikeDetail {
+  bool doubleFlag = 1; // 官方 double_flag：bool
+  uint32 seqId = 2; // 官方 seq_id：int32
+  uint32 renewalsNum = 3; // 官方 renewals_num：int32
+  uint32 triggersNum = 4; // 官方 triggers_num：int32
+}
+
+// 官方定义：webcast.im.DisplayControlInfo（共 2 格；本文件声明的字段号已逐格核对）
+message DisplayControlInfo {
+  bool showText = 1; // 官方 show_text：bool
+  bool showIcons = 2; // 官方 show_icons：bool
+}
+
+// 官方定义：webcast.im.EpisodeChatMessage（共 9 格；本文件声明的字段号已逐格核对）
+message EpisodeChatMessage {
+   Message common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+   User user = 2; // 官方 user：User；本条消息的主体用户
+   string content = 3; // 官方 content：string；弹幕正文（实测正常解出，界面在用）
+   bool visibleToSende = 4; // 官方该格是 visible_to_sender：bool（我们叫 visibleToSende）
+//   BackgroundImage backgroundImage = 5;
+//   PublicAreaCommon publicAreaCommon = 6;
+   Image giftImage = 7; // 官方 gift_image：Image
+   uint64 agreeMsgId = 8; // 官方 agree_msg_id：int64
+   repeated string colorValueList = 9; // 官方该格是 color_value：string（我们叫 colorValueList）
+}
+
+
+// 官方定义：webcast.im.MatchAgainstScoreMessage（共 6 格；本文件声明的字段号已逐格核对）
+message MatchAgainstScoreMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  Against against = 2; // 官方 against：Against
+  uint32 matchStatus = 3; // 官方 match_status：int32
+  uint32 displayStatus = 4; // 官方 display_status：int32
+}
+
+// 官方定义：webcast.data.Against（共 25 格；本文件声明的字段号已逐格核对）
+message Against {
+  string leftName = 1; // 官方 left_name：string
+  Image leftLogo = 2; // 官方 left_logo：Image
+  string leftGoal = 3; // 官方 left_goal：string
+//  LeftPlayersList leftPlayersList = 4;
+//  LeftGoalStageDetail leftGoalStageDetail = 5;
+  string rightName = 6; // 官方 right_name：string
+  Image rightLogo = 7; // 官方 right_logo：Image
+  string rightGoal = 8; // 官方 right_goal：string
+//  RightPlayersList rightPlayersList  = 9;
+//  RightGoalStageDetail rightGoalStageDetail = 10;
+  uint64 timestamp = 11; // 官方 timestamp：int64
+  uint64 version = 12; // 官方 version：int64
+  uint64 leftTeamId = 13; // 官方 left_team_id：int64
+  uint64 rightTeamId = 14; // 官方 right_team_id：int64
+  uint64 diffSei2absSecond = 15; // 官方 diff_sei2abs_second：int64
+  uint32 finalGoalStage = 16; // 官方 final_goal_stage：int32
+  uint32 currentGoalStage = 17; // 官方 current_goal_stage：int32
+  uint32 leftScoreAddition = 18; // 官方 left_score_addition：int32
+  uint32 rightScoreAddition = 19; // 官方 right_score_addition：int32
+  uint64 leftGoalInt = 20; // 官方 left_goal_int：int64
+  uint64 rightGoalInt = 21; // 官方 right_goal_int：int64
+}
+
+// 官方定义：webcast.im.Common（共 25 格；本文件声明的字段号已逐格核对）
+message Common {
+  string method = 1; // 官方 method：string
+  uint64 msgId = 2; // 官方 msg_id：int64
+  uint64 roomId = 3; // 官方 room_id：int64
+  uint64 createTime = 4; // 官方 create_time：int64
+  uint32 monitor = 5; // 官方 monitor：int32
+  bool isShowMsg = 6; // 官方 is_show_msg：bool
+  string describe = 7; // 官方 describe：string
+//  DisplayText displayText = 8;
+  uint64 foldType = 9; // 官方 fold_type：int64
+  uint64 anchorFoldType = 10; // 官方 anchor_fold_type：int64
+  uint64 priorityScore = 11; // 官方 priority_score：int64
+  string logId = 12; // 官方 log_id：string；抖音侧日志 ID（排查单笔礼物用）
+  string msgProcessFilterK = 13; // 官方 msg_process_filter_k：string
+  string msgProcessFilterV = 14; // 官方 msg_process_filter_v：string
+  User user = 15; // 官方 user：User；本条消息的主体用户
+//  Room room = 16;
+  uint64 anchorFoldTypeV2 = 17; // 官方 anchor_fold_type_v2：int64
+  uint64 processAtSeiTimeMs = 18; // 官方 process_at_sei_time_ms：int64
+  uint64 randomDispatchMs = 19; // 官方 random_dispatch_ms：int64
+  bool isDispatch = 20; // 官方 is_dispatch：bool
+  uint64 channelId = 21; // 官方 channel_id：int64
+  uint64 diffSei2absSecond = 22; // 官方 diff_sei2abs_second：int64
+  uint64 anchorFoldDuration = 23; // 官方 anchor_fold_duration：int64
+}
+
+// 官方定义：webcast.data.User（共 138 格；本文件声明的字段号已逐格核对）
+message User {
+  uint64 id = 1; // 官方 id：int64；用户数字 ID（名册主键）
+  uint64 shortId = 2; // 官方 short_id：int64
+  string nickName = 3; // 官方该格是 user_open_id：string（我们叫 nickName）；昵称（⚠ 存疑：官方 User 表里第 3 格名为 user_open_id，见 docs）
+  uint32 gender = 4; // 官方 gender：int32
+  string Signature = 5; // 官方 signature：string；个性签名
+  uint32 Level = 6; // 官方 level：int32；用户等级（界面等级牌）
+  uint64 Birthday = 7; // 官方 birthday：int64
+  string Telephone = 8; // 官方 telephone：string
+  Image AvatarThumb = 9; // 官方 avatar_thumb：Image；头像（小）
+  Image AvatarMedium = 10; // 官方 avatar_medium：Image；头像（中）
+  Image AvatarLarge = 11; // 官方 avatar_large：Image
+  bool Verified = 12; // 官方 verified：bool
+  uint32 Experience = 13; // 官方 experience：int32
+  string city = 14; // 官方 city：string
+  int32 Status = 15; // 官方 status：int32
+  uint64 CreateTime = 16; // 官方 create_time：int64
+  uint64 ModifyTime = 17; // 官方 modify_time：int64
+  uint32 Secret = 18; // 官方 secret：int32
+  string ShareQrcodeUri = 19; // 官方 share_qrcode_uri：string
+  uint32 IncomeSharePercent = 20; // 官方 income_share_percent：int32
+  repeated Image BadgeImageList = 21; // 官方 badge_image_list：Image
+  FollowInfo FollowInfo = 22; // 官方 follow_info：User.FollowInfo；关注关系（是否关注主播/回关）
+//  PayGrade PayGrade = 23;
+//  FansClub FansClub = 24;
+//  Border Border = 25;
+  string SpecialId = 26; // 官方 special_id：string
+  Image AvatarBorder = 27; // 官方 avatar_border：Image
+  Image Medal = 28; // 官方 medal：Image
+  repeated Image RealTimeIconsList = 29; // 官方该格是 real_time_icons：Image（我们叫 RealTimeIconsList）
+  string displayId = 38; // 官方 display_id：string；抖音号（界面 @xxx 那个）
+  string secUid = 46; // 官方 sec_uid：string；加密 UID（跨端定位同一个人）
+  uint64 fanTicketCount = 1022; // 官方 fan_ticket_count：int64；粉丝团票数
+  string idStr = 1028; // 官方 id_str：string；用户 ID 字符串形式（避免前端精度丢失）
+  uint32 ageRange = 1045; // 官方 age_range：int32
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message FollowInfo {
+  uint64 followingCount = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  uint64 followerCount = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  uint64 followStatus = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+  uint64 pushStatus = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+  string remarkName = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  string followerCountStr = 6; // ⚠ 官方该消息没有第 6 格（自留/待核字段）
+  string followingCountStr = 7; // ⚠ 官方该消息没有第 7 格（自留/待核字段）
+
+}
+// 官方定义：webcast.data.Image（共 11 格；本文件声明的字段号已逐格核对）
+message Image {
+  repeated string urlListList = 1; // 官方该格是 url_list：string（我们叫 urlListList）；图片直链列表（取第一个可用）
+  string uri = 2; // 官方 uri：string；不含主机的模板路径，不能直接使用
+  uint64 height = 3; // 官方 height：int64
+  uint64 width = 4; // 官方 width：int64
+  string avgColor = 5; // 官方 avg_color：string
+  uint32 imageType = 6; // 官方 image_type：int32
+  string openWebUrl = 7; // 官方 open_web_url：string
+  ImageContent content = 8; // 官方 content：Image.Content；弹幕正文（实测正常解出，界面在用）
+  bool isAnimated = 9; // 官方 is_animated：bool
+  NinePatchSetting FlexSettingList = 10; // 官方 flex_setting_list：Image.NinePatchSetting，官方为 repeated
+  NinePatchSetting TextSettingList = 11; // 官方 text_setting_list：Image.NinePatchSetting，官方为 repeated
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message NinePatchSetting {
+  repeated string settingListList = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+}
+
+// 官方定义：webcast.data.Image.Content（共 4 格；本文件声明的字段号已逐格核对）
+message ImageContent {
+  string name = 1; // 官方 name：string；名称
+  string fontColor = 2; // 官方 font_color：string
+  uint64 level = 3; // 官方 level：int64；用户等级（界面等级牌）
+  string alternativeText = 4; // 官方 alternative_text：string
+}
+
+// 官方定义：webcast.im.PushFrame（共 6 格；本文件声明的字段号已逐格核对）
+message PushFrame {
+  uint64 seqId = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  uint64 logId = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  uint64 service = 3; // 官方 service：int32
+  uint64 method = 4; // 官方 method：int32
+  repeated HeadersList headersList = 5; // 官方该格是 headers：message（我们叫 headersList）
+  string payloadEncoding = 6; // 官方 payload_encoding：string
+  string payloadType = 7; // 官方 payload_type：string
+  bytes payload = 8; // 官方 payload：bytes
+
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message kk {
+  uint32 k = 14; // ⚠ 官方该消息没有第 14 格（自留/待核字段）
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message SendMessageBody {
+  string conversationId = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  uint32 conversationType = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  uint64 conversationShortId = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+  string content = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+  repeated ExtList ext = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  uint32 messageType = 6; // ⚠ 官方该消息没有第 6 格（自留/待核字段）
+  string ticket = 7; // ⚠ 官方该消息没有第 7 格（自留/待核字段）
+  string clientMessageId = 8; // ⚠ 官方该消息没有第 8 格（自留/待核字段）
+
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message ExtList {
+  string key = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  string value = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message Rsp{
+  int32 a = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  int32 b = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  int32 c = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+  string d = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+  int32 e = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  message F {
+    uint64 q1 = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+    uint64 q3 = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+    string q4 = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+    uint64 q5 = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  }
+  F f = 6; // ⚠ 官方该消息没有第 6 格（自留/待核字段）
+  string g = 7; // ⚠ 官方该消息没有第 7 格（自留/待核字段）
+  uint64 h = 10; // ⚠ 官方该消息没有第 10 格（自留/待核字段）
+  uint64 i = 11; // ⚠ 官方该消息没有第 11 格（自留/待核字段）
+  uint64 j = 13; // ⚠ 官方该消息没有第 13 格（自留/待核字段）
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message PreMessage {
+  uint32 cmd = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  uint32 sequenceId = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+  string sdkVersion = 3; // ⚠ 官方该消息没有第 3 格（自留/待核字段）
+  string token = 4; // ⚠ 官方该消息没有第 4 格（自留/待核字段）
+  uint32 refer = 5; // ⚠ 官方该消息没有第 5 格（自留/待核字段）
+  uint32 inboxType = 6; // ⚠ 官方该消息没有第 6 格（自留/待核字段）
+  string buildNumber = 7; // ⚠ 官方该消息没有第 7 格（自留/待核字段）
+  SendMessageBody sendMessageBody = 8; // ⚠ 官方该消息没有第 8 格（自留/待核字段）
+  // 字段名待定
+  string aa = 9; // ⚠ 官方该消息没有第 9 格（自留/待核字段）
+  string devicePlatform = 11; // ⚠ 官方该消息没有第 11 格（自留/待核字段）
+  repeated HeadersList headers = 15; // ⚠ 官方该消息没有第 15 格（自留/待核字段）
+  uint32 authType = 18; // ⚠ 官方该消息没有第 18 格（自留/待核字段）
+  string biz = 21; // ⚠ 官方该消息没有第 21 格（自留/待核字段）
+  string access = 22; // ⚠ 官方该消息没有第 22 格（自留/待核字段）
+}
+
+// ⚠ 官方 schema（webcast.im / webcast.data）里找不到同名消息，字段号未经对照
+message HeadersList {
+  string key = 1; // ⚠ 官方该消息没有第 1 格（自留/待核字段）
+  string value = 2; // ⚠ 官方该消息没有第 2 格（自留/待核字段）
+}
+
+enum CommentTypeTag {
+  COMMENTTYPETAGUNKNOWN = 0;
+  COMMENTTYPETAGSTAR = 1;
+}
+
+// from https://github.com/scx567888/live-room-watcher/blob/master/src/main/proto/douyin_hack/webcast/im/RoomRankMessage.proto
+// 直播间排行榜
+// 官方定义：webcast.im.RoomRankMessage（共 3 格；本文件声明的字段号已逐格核对）
+message RoomRankMessage {
+  Common common = 1; // 官方 common：Common；消息公共头（method/msg_id/room_id/create_time 等）
+  repeated RoomRank ranksList = 2; // 官方该格是 ranks：RoomRankMessage.RoomRank（我们叫 ranksList）；房内贡献榜（实测只给前 3 名）
+
+  message RoomRank{
+    User user = 1; // 官方该格是 common：Common（我们叫 user）；消息公共头（method/msg_id/room_id/create_time 等）；本条消息的主体用户
+    string scoreStr = 2; // 官方该格是 ranks：RoomRankMessage.RoomRank（我们叫 scoreStr），官方为 repeated；房内贡献榜（实测只给前 3 名）
+    bool profileHidden = 3; // 官方该格是 audience_ranks：Rank（我们叫 profileHidden），官方为 repeated
+  }
+}
+
+// 团播"当前上播主播名单"帧（method: WebcastGroupLiveOnCamRecognitionMessage）。
+// 直播中逐帧反复下发，entries 即此刻排在画面格子里的主播——**含没收过礼物、礼物口径看不见的那些**，
+// 所以它是团播主播名单的权威来源（个播也可能给，退化成单条）。
+// ⚠ 字段号来自真实报文的 protowire dump 核对（取法见 docs/dy-webcast-proto-check.md），
+//    该消息不在我们已逐格核对的官方清单里，故只声明实测存在且计票要用的格：common(1)、data(2)、
+//    data.entries(2)、entry.userId(1)。entry 的 3(fixed64)/4(bytes 格子几何) 与计票无关，未声明（未知字段自动忽略）。
+//    entry.userId 是主播数字 uid 的字符串形式，与 GiftMessage.toUser.id 同一 id 空间，可靠 ParseUint 对齐。
+message GroupLiveOnCamRecognitionMessage {
+  Common common = 1; // 官方 common：Common；含 room_id（本场所属长房号）
+  GroupLiveOnCamData data = 2; // 主播名单载体
+
+  message GroupLiveOnCamData {
+    repeated OnCamEntry entries = 2; // 每个上播主播一条
+  }
+  message OnCamEntry {
+    string userId = 1; // 主播数字 uid（字符串）；本名单主键
+  }
+}

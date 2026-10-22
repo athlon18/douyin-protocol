@@ -1,0 +1,5 @@
+# Go 源码与文本统一 LF，避免 Windows 上 CRLF 让 diff/签名材料指纹漂移
+* text=auto eol=lf
+*.js text eol=lf
+*.proto text eol=lf
+*.go text eol=lf
