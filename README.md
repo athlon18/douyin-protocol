@@ -70,10 +70,10 @@ git tag -a v0.1.1 -m "fix: …"
 git push origin v0.1.1
 ```
 
-## 首次推送（仓库还没上去时）
+## 远端
 
-本目录已经 `git init`（分支 `main`、初始提交、tag `v0.1.0`），但**还没推到远端**。
-在 GitHub 上建好**私有**仓库后：
+仓库：`git@github.com:athlon18/douyin-protocol.git`（**私有**），`main` 与 tag `v0.1.0` 已推送。
+新机器首次推送（远端还没有仓库时）：
 
 ```bash
 git remote add origin git@github.com:athlon18/douyin-protocol.git
