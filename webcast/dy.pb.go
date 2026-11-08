@@ -5430,6 +5430,182 @@ func (x *GroupLiveOnCamRecognitionMessage) GetData() *GroupLiveOnCamRecognitionM
 	return nil
 }
 
+// 官方 webcast.im.EmojiChatMessage（表情包弹幕）。emojiContent(f4, 类型 EmojiDes)本库未声明→留 unknownFields。
+type EmojiChatMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Common               *Common           `protobuf:"bytes,1,opt,name=common,proto3" json:"common,omitempty"`                              // 官方 common：Common
+	User                 *User             `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`                                  // 官方 user：User；发送者
+	EmojiId              uint64            `protobuf:"varint,3,opt,name=emojiId,proto3" json:"emojiId,omitempty"`                           // 官方 emoji_id：int64
+	DefaultContent       string            `protobuf:"bytes,5,opt,name=defaultContent,proto3" json:"defaultContent,omitempty"`              // 官方 default_content：string；表情可读文字
+	BackgroundImage      *Image            `protobuf:"bytes,6,opt,name=backgroundImage,proto3" json:"backgroundImage,omitempty"`            // 官方 background_image：Image
+	FromIntercom         bool              `protobuf:"varint,7,opt,name=fromIntercom,proto3" json:"fromIntercom,omitempty"`                 // 官方 from_intercom：bool
+	IntercomHideUserCard bool              `protobuf:"varint,8,opt,name=intercomHideUserCard,proto3" json:"intercomHideUserCard,omitempty"` // 官方 intercom_hide_user_card：bool
+	PublicAreaCommon     *PublicAreaCommon `protobuf:"bytes,9,opt,name=publicAreaCommon,proto3" json:"publicAreaCommon,omitempty"`          // 官方 public_area_common：PublicAreaCommon
+}
+
+func (x *EmojiChatMessage) Reset() {
+	*x = EmojiChatMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_dy_proto_msgTypes[51]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EmojiChatMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmojiChatMessage) ProtoMessage() {}
+
+func (x *EmojiChatMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_dy_proto_msgTypes[51]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmojiChatMessage.ProtoReflect.Descriptor instead.
+func (*EmojiChatMessage) Descriptor() ([]byte, []int) {
+	return file_dy_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *EmojiChatMessage) GetCommon() *Common {
+	if x != nil {
+		return x.Common
+	}
+	return nil
+}
+
+func (x *EmojiChatMessage) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *EmojiChatMessage) GetEmojiId() uint64 {
+	if x != nil {
+		return x.EmojiId
+	}
+	return 0
+}
+
+func (x *EmojiChatMessage) GetDefaultContent() string {
+	if x != nil {
+		return x.DefaultContent
+	}
+	return ""
+}
+
+func (x *EmojiChatMessage) GetBackgroundImage() *Image {
+	if x != nil {
+		return x.BackgroundImage
+	}
+	return nil
+}
+
+func (x *EmojiChatMessage) GetFromIntercom() bool {
+	if x != nil {
+		return x.FromIntercom
+	}
+	return false
+}
+
+func (x *EmojiChatMessage) GetIntercomHideUserCard() bool {
+	if x != nil {
+		return x.IntercomHideUserCard
+	}
+	return false
+}
+
+func (x *EmojiChatMessage) GetPublicAreaCommon() *PublicAreaCommon {
+	if x != nil {
+		return x.PublicAreaCommon
+	}
+	return nil
+}
+
+// 官方 webcast.im.FansclubMessage（粉丝团事件，如加入粉丝团）。
+type FansclubMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CommonInfo *Common `protobuf:"bytes,1,opt,name=commonInfo,proto3" json:"commonInfo,omitempty"` // 官方 common_info：Common
+	Type       int64   `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`            // 官方 type：int64；事件类型码
+	Content    string  `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`       // 官方 content：string；事件文案
+	User       *User   `protobuf:"bytes,4,opt,name=user,proto3" json:"user,omitempty"`             // 官方 user：User；当事人
+}
+
+func (x *FansclubMessage) Reset() {
+	*x = FansclubMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_dy_proto_msgTypes[52]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FansclubMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FansclubMessage) ProtoMessage() {}
+
+func (x *FansclubMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_dy_proto_msgTypes[52]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FansclubMessage.ProtoReflect.Descriptor instead.
+func (*FansclubMessage) Descriptor() ([]byte, []int) {
+	return file_dy_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *FansclubMessage) GetCommonInfo() *Common {
+	if x != nil {
+		return x.CommonInfo
+	}
+	return nil
+}
+
+func (x *FansclubMessage) GetType() int64 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *FansclubMessage) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *FansclubMessage) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
 type Rsp_F struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5444,7 +5620,7 @@ type Rsp_F struct {
 func (x *Rsp_F) Reset() {
 	*x = Rsp_F{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dy_proto_msgTypes[53]
+		mi := &file_dy_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5457,7 +5633,7 @@ func (x *Rsp_F) String() string {
 func (*Rsp_F) ProtoMessage() {}
 
 func (x *Rsp_F) ProtoReflect() protoreflect.Message {
-	mi := &file_dy_proto_msgTypes[53]
+	mi := &file_dy_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5514,7 +5690,7 @@ type RoomRankMessage_RoomRank struct {
 func (x *RoomRankMessage_RoomRank) Reset() {
 	*x = RoomRankMessage_RoomRank{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dy_proto_msgTypes[54]
+		mi := &file_dy_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5527,7 +5703,7 @@ func (x *RoomRankMessage_RoomRank) String() string {
 func (*RoomRankMessage_RoomRank) ProtoMessage() {}
 
 func (x *RoomRankMessage_RoomRank) ProtoReflect() protoreflect.Message {
-	mi := &file_dy_proto_msgTypes[54]
+	mi := &file_dy_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5575,7 +5751,7 @@ type GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData struct {
 func (x *GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData) Reset() {
 	*x = GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dy_proto_msgTypes[55]
+		mi := &file_dy_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5588,7 +5764,7 @@ func (x *GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData) String() string {
 func (*GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData) ProtoMessage() {}
 
 func (x *GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData) ProtoReflect() protoreflect.Message {
-	mi := &file_dy_proto_msgTypes[55]
+	mi := &file_dy_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5622,7 +5798,7 @@ type GroupLiveOnCamRecognitionMessage_OnCamEntry struct {
 func (x *GroupLiveOnCamRecognitionMessage_OnCamEntry) Reset() {
 	*x = GroupLiveOnCamRecognitionMessage_OnCamEntry{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_dy_proto_msgTypes[56]
+		mi := &file_dy_proto_msgTypes[58]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5635,7 +5811,7 @@ func (x *GroupLiveOnCamRecognitionMessage_OnCamEntry) String() string {
 func (*GroupLiveOnCamRecognitionMessage_OnCamEntry) ProtoMessage() {}
 
 func (x *GroupLiveOnCamRecognitionMessage_OnCamEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_dy_proto_msgTypes[56]
+	mi := &file_dy_proto_msgTypes[58]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6669,15 +6845,48 @@ var file_dy_proto_rawDesc = []byte{
 	0x73, 0x61, 0x67, 0x65, 0x2e, 0x4f, 0x6e, 0x43, 0x61, 0x6d, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52,
 	0x07, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0x1a, 0x24, 0x0a, 0x0a, 0x4f, 0x6e, 0x43, 0x61,
 	0x6d, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x2a, 0x43,
-	0x0a, 0x0e, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x54, 0x61, 0x67,
-	0x12, 0x19, 0x0a, 0x15, 0x43, 0x4f, 0x4d, 0x4d, 0x45, 0x4e, 0x54, 0x54, 0x59, 0x50, 0x45, 0x54,
-	0x41, 0x47, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x16, 0x0a, 0x12, 0x43,
-	0x4f, 0x4d, 0x4d, 0x45, 0x4e, 0x54, 0x54, 0x59, 0x50, 0x45, 0x54, 0x41, 0x47, 0x53, 0x54, 0x41,
-	0x52, 0x10, 0x01, 0x42, 0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x61, 0x74, 0x68, 0x6c, 0x6f, 0x6e, 0x31, 0x38, 0x2f, 0x64, 0x6f, 0x75, 0x79, 0x69,
-	0x6e, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2f, 0x77, 0x65, 0x62, 0x63, 0x61,
-	0x73, 0x74, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0xf5,
+	0x02, 0x0a, 0x10, 0x45, 0x6d, 0x6f, 0x6a, 0x69, 0x43, 0x68, 0x61, 0x74, 0x4d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x12, 0x26, 0x0a, 0x06, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x64, 0x6f, 0x75, 0x79, 0x69, 0x6e, 0x2e, 0x43, 0x6f, 0x6d,
+	0x6d, 0x6f, 0x6e, 0x52, 0x06, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x12, 0x20, 0x0a, 0x04, 0x75,
+	0x73, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x64, 0x6f, 0x75, 0x79,
+	0x69, 0x6e, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12, 0x18, 0x0a,
+	0x07, 0x65, 0x6d, 0x6f, 0x6a, 0x69, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07,
+	0x65, 0x6d, 0x6f, 0x6a, 0x69, 0x49, 0x64, 0x12, 0x26, 0x0a, 0x0e, 0x64, 0x65, 0x66, 0x61, 0x75,
+	0x6c, 0x74, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0e, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12,
+	0x37, 0x0a, 0x0f, 0x62, 0x61, 0x63, 0x6b, 0x67, 0x72, 0x6f, 0x75, 0x6e, 0x64, 0x49, 0x6d, 0x61,
+	0x67, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x64, 0x6f, 0x75, 0x79, 0x69,
+	0x6e, 0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x0f, 0x62, 0x61, 0x63, 0x6b, 0x67, 0x72, 0x6f,
+	0x75, 0x6e, 0x64, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x66, 0x72, 0x6f, 0x6d,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x6f, 0x6d, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0c,
+	0x66, 0x72, 0x6f, 0x6d, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x6f, 0x6d, 0x12, 0x32, 0x0a, 0x14,
+	0x69, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x6f, 0x6d, 0x48, 0x69, 0x64, 0x65, 0x55, 0x73, 0x65, 0x72,
+	0x43, 0x61, 0x72, 0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x08, 0x52, 0x14, 0x69, 0x6e, 0x74, 0x65,
+	0x72, 0x63, 0x6f, 0x6d, 0x48, 0x69, 0x64, 0x65, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64,
+	0x12, 0x44, 0x0a, 0x10, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x41, 0x72, 0x65, 0x61, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x6f, 0x75,
+	0x79, 0x69, 0x6e, 0x2e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x41, 0x72, 0x65, 0x61, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x52, 0x10, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x41, 0x72, 0x65, 0x61,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x22, 0x91, 0x01, 0x0a, 0x0f, 0x46, 0x61, 0x6e, 0x73, 0x63,
+	0x6c, 0x75, 0x62, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x2e, 0x0a, 0x0a, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e,
+	0x2e, 0x64, 0x6f, 0x75, 0x79, 0x69, 0x6e, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x52, 0x0a,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79,
+	0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x18,
+	0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12, 0x20, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x72,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x64, 0x6f, 0x75, 0x79, 0x69, 0x6e, 0x2e,
+	0x55, 0x73, 0x65, 0x72, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x2a, 0x43, 0x0a, 0x0e, 0x43, 0x6f,
+	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x54, 0x61, 0x67, 0x12, 0x19, 0x0a, 0x15,
+	0x43, 0x4f, 0x4d, 0x4d, 0x45, 0x4e, 0x54, 0x54, 0x59, 0x50, 0x45, 0x54, 0x41, 0x47, 0x55, 0x4e,
+	0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x16, 0x0a, 0x12, 0x43, 0x4f, 0x4d, 0x4d, 0x45,
+	0x4e, 0x54, 0x54, 0x59, 0x50, 0x45, 0x54, 0x41, 0x47, 0x53, 0x54, 0x41, 0x52, 0x10, 0x01, 0x42,
+	0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x74,
+	0x68, 0x6c, 0x6f, 0x6e, 0x31, 0x38, 0x2f, 0x64, 0x6f, 0x75, 0x79, 0x69, 0x6e, 0x2d, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2f, 0x77, 0x65, 0x62, 0x63, 0x61, 0x73, 0x74, 0x3b, 0x70,
+	0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -6693,7 +6902,7 @@ func file_dy_proto_rawDescGZIP() []byte {
 }
 
 var file_dy_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_dy_proto_msgTypes = make([]protoimpl.MessageInfo, 57)
+var file_dy_proto_msgTypes = make([]protoimpl.MessageInfo, 59)
 var file_dy_proto_goTypes = []any{
 	(CommentTypeTag)(0),                      // 0: douyin.CommentTypeTag
 	(*Response)(nil),                         // 1: douyin.Response
@@ -6747,16 +6956,18 @@ var file_dy_proto_goTypes = []any{
 	(*HeadersList)(nil),                      // 49: douyin.HeadersList
 	(*RoomRankMessage)(nil),                  // 50: douyin.RoomRankMessage
 	(*GroupLiveOnCamRecognitionMessage)(nil), // 51: douyin.GroupLiveOnCamRecognitionMessage
-	nil,                                      // 52: douyin.Response.RouteParamsEntry
-	nil,                                      // 53: douyin.EffectConfig.ExtraMapEntry
-	(*Rsp_F)(nil),                            // 54: douyin.Rsp.F
-	(*RoomRankMessage_RoomRank)(nil),         // 55: douyin.RoomRankMessage.RoomRank
-	(*GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData)(nil), // 56: douyin.GroupLiveOnCamRecognitionMessage.GroupLiveOnCamData
-	(*GroupLiveOnCamRecognitionMessage_OnCamEntry)(nil),         // 57: douyin.GroupLiveOnCamRecognitionMessage.OnCamEntry
+	(*EmojiChatMessage)(nil),                 // 52: douyin.EmojiChatMessage
+	(*FansclubMessage)(nil),                  // 53: douyin.FansclubMessage
+	nil,                                      // 54: douyin.Response.RouteParamsEntry
+	nil,                                      // 55: douyin.EffectConfig.ExtraMapEntry
+	(*Rsp_F)(nil),                            // 56: douyin.Rsp.F
+	(*RoomRankMessage_RoomRank)(nil),         // 57: douyin.RoomRankMessage.RoomRank
+	(*GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData)(nil), // 58: douyin.GroupLiveOnCamRecognitionMessage.GroupLiveOnCamData
+	(*GroupLiveOnCamRecognitionMessage_OnCamEntry)(nil),         // 59: douyin.GroupLiveOnCamRecognitionMessage.OnCamEntry
 }
 var file_dy_proto_depIdxs = []int32{
 	2,   // 0: douyin.Response.messagesList:type_name -> douyin.Message
-	52,  // 1: douyin.Response.routeParams:type_name -> douyin.Response.RouteParamsEntry
+	54,  // 1: douyin.Response.routeParams:type_name -> douyin.Response.RouteParamsEntry
 	34,  // 2: douyin.ChatMessage.common:type_name -> douyin.Common
 	38,  // 3: douyin.ChatMessage.user:type_name -> douyin.User
 	40,  // 4: douyin.ChatMessage.backgroundImage:type_name -> douyin.Image
@@ -6805,7 +7016,7 @@ var file_dy_proto_depIdxs = []int32{
 	40,  // 47: douyin.EffectConfig.textIconOverlay:type_name -> douyin.Image
 	40,  // 48: douyin.EffectConfig.animatedBadge:type_name -> douyin.Image
 	40,  // 49: douyin.EffectConfig.dynamicImage:type_name -> douyin.Image
-	53,  // 50: douyin.EffectConfig.extraMap:type_name -> douyin.EffectConfig.ExtraMapEntry
+	55,  // 50: douyin.EffectConfig.extraMap:type_name -> douyin.EffectConfig.ExtraMapEntry
 	25,  // 51: douyin.Text.defaultFormat:type_name -> douyin.TextFormat
 	18,  // 52: douyin.Text.piecesList:type_name -> douyin.TextPiece
 	25,  // 53: douyin.TextPiece.format:type_name -> douyin.TextFormat
@@ -6850,20 +7061,26 @@ var file_dy_proto_depIdxs = []int32{
 	41,  // 92: douyin.Image.TextSettingList:type_name -> douyin.NinePatchSetting
 	49,  // 93: douyin.PushFrame.headersList:type_name -> douyin.HeadersList
 	46,  // 94: douyin.SendMessageBody.ext:type_name -> douyin.ExtList
-	54,  // 95: douyin.Rsp.f:type_name -> douyin.Rsp.F
+	56,  // 95: douyin.Rsp.f:type_name -> douyin.Rsp.F
 	45,  // 96: douyin.PreMessage.sendMessageBody:type_name -> douyin.SendMessageBody
 	49,  // 97: douyin.PreMessage.headers:type_name -> douyin.HeadersList
 	34,  // 98: douyin.RoomRankMessage.common:type_name -> douyin.Common
-	55,  // 99: douyin.RoomRankMessage.ranksList:type_name -> douyin.RoomRankMessage.RoomRank
+	57,  // 99: douyin.RoomRankMessage.ranksList:type_name -> douyin.RoomRankMessage.RoomRank
 	34,  // 100: douyin.GroupLiveOnCamRecognitionMessage.common:type_name -> douyin.Common
-	56,  // 101: douyin.GroupLiveOnCamRecognitionMessage.data:type_name -> douyin.GroupLiveOnCamRecognitionMessage.GroupLiveOnCamData
-	38,  // 102: douyin.RoomRankMessage.RoomRank.user:type_name -> douyin.User
-	57,  // 103: douyin.GroupLiveOnCamRecognitionMessage.GroupLiveOnCamData.entries:type_name -> douyin.GroupLiveOnCamRecognitionMessage.OnCamEntry
-	104, // [104:104] is the sub-list for method output_type
-	104, // [104:104] is the sub-list for method input_type
-	104, // [104:104] is the sub-list for extension type_name
-	104, // [104:104] is the sub-list for extension extendee
-	0,   // [0:104] is the sub-list for field type_name
+	58,  // 101: douyin.GroupLiveOnCamRecognitionMessage.data:type_name -> douyin.GroupLiveOnCamRecognitionMessage.GroupLiveOnCamData
+	34,  // 102: douyin.EmojiChatMessage.common:type_name -> douyin.Common
+	38,  // 103: douyin.EmojiChatMessage.user:type_name -> douyin.User
+	40,  // 104: douyin.EmojiChatMessage.backgroundImage:type_name -> douyin.Image
+	15,  // 105: douyin.EmojiChatMessage.publicAreaCommon:type_name -> douyin.PublicAreaCommon
+	34,  // 106: douyin.FansclubMessage.commonInfo:type_name -> douyin.Common
+	38,  // 107: douyin.FansclubMessage.user:type_name -> douyin.User
+	38,  // 108: douyin.RoomRankMessage.RoomRank.user:type_name -> douyin.User
+	59,  // 109: douyin.GroupLiveOnCamRecognitionMessage.GroupLiveOnCamData.entries:type_name -> douyin.GroupLiveOnCamRecognitionMessage.OnCamEntry
+	110, // [110:110] is the sub-list for method output_type
+	110, // [110:110] is the sub-list for method input_type
+	110, // [110:110] is the sub-list for extension type_name
+	110, // [110:110] is the sub-list for extension extendee
+	0,   // [0:110] is the sub-list for field type_name
 }
 
 func init() { file_dy_proto_init() }
@@ -7484,8 +7701,8 @@ func file_dy_proto_init() {
 				return nil
 			}
 		}
-		file_dy_proto_msgTypes[53].Exporter = func(v any, i int) any {
-			switch v := v.(*Rsp_F); i {
+		file_dy_proto_msgTypes[51].Exporter = func(v any, i int) any {
+			switch v := v.(*EmojiChatMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7496,8 +7713,8 @@ func file_dy_proto_init() {
 				return nil
 			}
 		}
-		file_dy_proto_msgTypes[54].Exporter = func(v any, i int) any {
-			switch v := v.(*RoomRankMessage_RoomRank); i {
+		file_dy_proto_msgTypes[52].Exporter = func(v any, i int) any {
+			switch v := v.(*FansclubMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7509,7 +7726,7 @@ func file_dy_proto_init() {
 			}
 		}
 		file_dy_proto_msgTypes[55].Exporter = func(v any, i int) any {
-			switch v := v.(*GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData); i {
+			switch v := v.(*Rsp_F); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7521,6 +7738,30 @@ func file_dy_proto_init() {
 			}
 		}
 		file_dy_proto_msgTypes[56].Exporter = func(v any, i int) any {
+			switch v := v.(*RoomRankMessage_RoomRank); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_dy_proto_msgTypes[57].Exporter = func(v any, i int) any {
+			switch v := v.(*GroupLiveOnCamRecognitionMessage_GroupLiveOnCamData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_dy_proto_msgTypes[58].Exporter = func(v any, i int) any {
 			switch v := v.(*GroupLiveOnCamRecognitionMessage_OnCamEntry); i {
 			case 0:
 				return &v.state
@@ -7539,7 +7780,7 @@ func file_dy_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_dy_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   57,
+			NumMessages:   59,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

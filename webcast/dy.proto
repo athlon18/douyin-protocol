@@ -686,3 +686,23 @@ message GroupLiveOnCamRecognitionMessage {
     string userId = 1; // 主播数字 uid（字符串）；本名单主键
   }
 }
+
+// 官方 webcast.im.EmojiChatMessage（表情包弹幕）。emojiContent(f4, 类型 EmojiDes)本库未声明→留 unknownFields。
+message EmojiChatMessage {
+  Common common = 1; // 官方 common：Common
+  User user = 2; // 官方 user：User；发送者
+  uint64 emojiId = 3; // 官方 emoji_id：int64
+  string defaultContent = 5; // 官方 default_content：string；表情可读文字
+  Image backgroundImage = 6; // 官方 background_image：Image
+  bool fromIntercom = 7; // 官方 from_intercom：bool
+  bool intercomHideUserCard = 8; // 官方 intercom_hide_user_card：bool
+  PublicAreaCommon publicAreaCommon = 9; // 官方 public_area_common：PublicAreaCommon
+}
+
+// 官方 webcast.im.FansclubMessage（粉丝团事件，如加入粉丝团）。
+message FansclubMessage {
+  Common commonInfo = 1; // 官方 common_info：Common
+  int64 type = 2; // 官方 type：int64；事件类型码
+  string content = 3; // 官方 content：string；事件文案
+  User user = 4; // 官方 user：User；当事人
+}
