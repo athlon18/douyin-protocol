@@ -470,6 +470,26 @@ message Common {
   uint64 anchorFoldDuration = 23; // 官方 anchor_fold_duration：int64
 }
 
+// 官方定义：webcast.data.User.PayGrade（VIP 消费等级；第一刀仅声明可解码的标量格）
+message PayGrade {
+  int64 totalDiamondCount = 1; // 官方 total_diamond_count：int64；累计抖币
+  string name = 3; // 官方 name：string；等级名
+  int64 level = 6; // 官方 level：int64；VIP 等级（核心）
+  int64 nowDiamond = 9; // 官方 now_diamond：int64
+  string gradeDescribe = 13; // 官方 grade_describe：string
+  int64 score = 25; // 官方 score：int64
+}
+
+// 官方定义：webcast.data.User.FansClub（粉丝团；仅声明用到的标量格，避开未定义的 UserBadge）
+message FansClubData {
+  string clubName = 1; // 官方 club_name：string；粉丝团名
+  int32 level = 2; // 官方 level：int32；粉丝团等级
+  int64 anchorId = 6; // 官方 anchor_id：int64；所属主播 ID
+}
+message FansClub {
+  FansClubData data = 1; // 官方 data：User.FansClub.FansClubData
+}
+
 // 官方定义：webcast.data.User（共 138 格；本文件声明的字段号已逐格核对）
 message User {
   uint64 id = 1; // 官方 id：int64；用户数字 ID（名册主键）
@@ -494,9 +514,9 @@ message User {
   uint32 IncomeSharePercent = 20; // 官方 income_share_percent：int32
   repeated Image BadgeImageList = 21; // 官方 badge_image_list：Image
   FollowInfo FollowInfo = 22; // 官方 follow_info：User.FollowInfo；关注关系（是否关注主播/回关）
-//  PayGrade PayGrade = 23;
-//  FansClub FansClub = 24;
-//  Border Border = 25;
+  PayGrade PayGrade = 23; // 官方 pay_grade：User.PayGrade；VIP 消费等级
+  FansClub FansClub = 24; // 官方 fans_club：User.FansClub；粉丝团（等级/团名/所属主播）
+//  Border Border = 25; // 待补：本库未定义 Border message，暂不启用（不影响 23/24 解码）
   string SpecialId = 26; // 官方 special_id：string
   Image AvatarBorder = 27; // 官方 avatar_border：Image
   Image Medal = 28; // 官方 medal：Image
