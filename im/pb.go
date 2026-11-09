@@ -1,4 +1,4 @@
-// Package imapi 抖音私信 imapi.douyin.com 的 protobuf wire 协议底座。
+// Package im 抖音私信 imapi.douyin.com 的 protobuf wire 协议底座。
 //
 // 只做两件事：① 手搓 protobuf wire 编解码（不依赖 protoc）；② 组请求信封 + 发 HTTP。
 // 刻意不认识任何业务概念（不 import dao / model / service）：

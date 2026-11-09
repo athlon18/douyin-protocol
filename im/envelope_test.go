@@ -34,4 +34,14 @@ func TestIsGroupConvID(t *testing.T) {
 	if IsGroupConvID("private:123:456") {
 		t.Error("带冒号应判私聊")
 	}
+	// 群聊 id 形态的下界是 6 位纯数字（^\d{6,25}$）：钉死边界，防止短数字被误判成群聊。
+	if IsGroupConvID("123") {
+		t.Error("不足 6 位的短数字不应误判成群聊")
+	}
+	if IsGroupConvID("12345") {
+		t.Error("5 位仍低于下界，应判私聊")
+	}
+	if !IsGroupConvID("123456") {
+		t.Error("6 位恰为下界(含)，应判群聊")
+	}
 }
