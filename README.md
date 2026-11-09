@@ -3,7 +3,7 @@
 抖音网页版（`live.douyin.com`）的**协议算法层**，从 `douyinlive` 主仓蒸馏出来的独立 Go module。
 目标是：其他项目**只引用、不复制**；算法随抖音改版时，发一个新版本，引用方改一处版本号即可。
 
-> 私有仓库。内部使用，不对外分发。
+> **公开仓库**（public）。可被任意项目按版本号 `go get` 引用。
 
 ## 包结构
 
@@ -58,7 +58,7 @@ webmssdk.SetMaterialPath("/path/to/webmssdk.js") // 传空串 = 回到只用内�
 语义化版本，以 git tag 发布：
 
 ```bash
-go get github.com/athlon18/douyin-protocol@v0.1.0
+go get github.com/athlon18/douyin-protocol@v0.2.1
 ```
 
 引用方升级 = 改 `go.mod` 里的一行版本号。**不要在引用方复制本包源码**，否则会立刻出现两份真源。
@@ -66,38 +66,29 @@ go get github.com/athlon18/douyin-protocol@v0.1.0
 发布新版本：
 
 ```bash
-git tag -a v0.1.1 -m "fix: …"
-git push origin v0.1.1
+git tag -a v0.2.2 -m "feat: …"
+git push origin v0.2.2
 ```
 
 ## 远端
 
-仓库：`git@github.com:athlon18/douyin-protocol.git`（**私有**），`main` 与 tag `v0.1.0` 已推送。
-新机器首次推送（远端还没有仓库时）：
+仓库：<https://github.com/athlon18/douyin-protocol>（**public**）。`main` 与 tag `v0.1.0 / v0.2.0 / v0.2.1` 已推送。
+
+因为是公开模块，引用方直接：
 
 ```bash
-git remote add origin git@github.com:athlon18/douyin-protocol.git
-git push -u origin main --tags
+go get github.com/athlon18/douyin-protocol@v0.2.1
 ```
 
-拉不通 `github.com:22` 时（公司网络常见）改走 443：
+**无需** `GOPRIVATE`、无需 SSH 凭据——走公开代理即可。中国大陆若默认 `proxy.golang.org` 连不通，配一次国内镜像即可拉到本模块及其 tag：
 
 ```bash
-ssh -T -p 443 git@ssh.github.com
-git remote add origin ssh://git@ssh.github.com:443/athlon18/douyin-protocol.git
+go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-引用方（另一台机器/另一个项目）拉取：
+（旧的 `GOPRIVATE=github.com/athlon18/*` + SSH 拉取写法是给私有仓用的，本仓已公开，不再需要。）
 
-```bash
-go env -w GOPRIVATE=github.com/athlon18/*
-go get github.com/athlon18/douyin-protocol@v0.1.0
-```
-
-私有模块必须配 `GOPRIVATE`，否则 `sum.golang.org` 拿不到源码会报校验失败；
-传输走 SSH 或本机已登录的 HTTPS 凭据，**不要把 token 写进任何文件**。
-如果引用方暂时连不上网（或想锁死构建），就在那边 `go mod vendor`，
-或保留一行 `replace` 指向本机 clone——两种都只影响那一个仓，不影响 tag 语义。
+如果引用方暂时连不上网（或想锁死构建），可在那边 `go mod vendor`，或用下面 `go.work` 指向本机 clone——两种都只影响那一个仓，不改 tag 语义。
 
 ## 在引用方本地开发（go.work，不入库）
 
@@ -105,7 +96,7 @@ go get github.com/athlon18/douyin-protocol@v0.1.0
 
 ```bash
 go work init . ./_external/douyin-protocol
-go work edit -replace=github.com/athlon18/douyin-protocol@v0.1.0=./_external/douyin-protocol
+go work edit -replace=github.com/athlon18/douyin-protocol@v0.2.1=./_external/douyin-protocol
 ```
 
 `use` 之外还要一条**带版本号**的 replace：`require` 里的版本仍要参与 MVS 选版，
